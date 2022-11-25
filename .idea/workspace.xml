@@ -5,20 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ff7484f-996b-48e7-8765-2ffd7e124fcb" name="Changes" comment="Nouvelle structure et version d'attestations fiscales.">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/poi_bin_5_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AttestationsFiscalesv2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/media/logofinal.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/media/signature.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/AttestationModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/AttestationUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AttestationsFiscalesv2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AttestationsFiscalesv2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/AttestationModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/AttestationModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/AttestationUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AttestationUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,12 +42,18 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/env/Java/pluggins/log4j-core-2.19.0.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/env/Java/pluggins/jcalendar-1.4/lib/junit-4.6.jar&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="view" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -74,9 +70,24 @@
       <created>1669372261215</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1669372261215</updated>
+      <updated>1669390066601</updated>
     </task>
-    <servers />
+    <task id="LOCAL-00001" summary="Nouvelle structure et version d'attestations fiscales.">
+      <changelist id="1ff7484f-996b-48e7-8765-2ffd7e124fcb" name="Changes" comment="Nouvelle structure et version d'attestations fiscales." />
+      <created>1669384165126</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669390066601</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <option name="commitChanges" value="false" />
+    <servers>
+      <GitHub url="https://github.com">
+        <option name="repoAuthor" value="Jlauth" />
+        <option name="repoName" value="AttestationsFiscalesv2" />
+      </GitHub>
+    </servers>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

@@ -2,6 +2,7 @@ package model;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
+import org.apache.poi.wp.usermodel.HeaderFooterType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageMar;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
@@ -13,13 +14,8 @@ import java.math.BigInteger;
 
 public class AttestationModel {
 
-    // Appel de la classe View
-    AttestationUI attestationUI;
 
-    // Trash variable "aller à la ligne"
     private static final String CHEAT = "                ";
-
-    // Variable des informations de l'entreprise
     private static final String ENTREPRISE_HOLDER = "Adelino Araujo";
     private static final String ENTREPRISE_NAME = "Arkadia PC";
     private static final String ENTREPRISE_STREET = "4, rue des Pyrénées";
@@ -28,18 +24,19 @@ public class AttestationModel {
     private static final String ENTREPRISE_MAIL = "contact@arkadia-pc.fr";
     private static final String ENTREPRISE_ID = "Agrément N° SAP524160330";
 
+    // Appel de la classe View
+    protected AttestationUI attestationUI;
 
     // Création de XWPFDocument
     XWPFDocument document = new XWPFDocument();
-    // Création de la table
-    XWPFTable table = document.createTable();
 
     /**
      * Constructeur de la classe Attestation
      */
     public AttestationModel(AttestationUI attestationUI) throws InvalidFormatException, IOException {
         this.attestationUI = attestationUI;
-
+        // Création de la table
+        XWPFTable table = document.createTable();
         // Enlever les bordures de la table
         table.removeBorders();
         // Custom des marges du document
@@ -56,11 +53,11 @@ public class AttestationModel {
         /*
           Header
          */
-
+        XWPFHeader header = document.createHeader(HeaderFooterType.DEFAULT);
         // TODO trouver une méthode pour aller à la ligne sans utiliser le "cheat"
         // Header gauche (table pos0)
         // infos entreprise
-        XWPFTableRow row = table.getRow(0);
+        /*XWPFTableRow row = table.getRow(0);
         row.getCell(0).setText(ENTREPRISE_NAME + CHEAT + CHEAT + CHEAT);
         row.getCell(0).setText(ENTREPRISE_STREET + CHEAT + CHEAT);
         row.getCell(0).setText(ENTREPRISE_CITY + CHEAT);
@@ -75,7 +72,6 @@ public class AttestationModel {
         // logo
         XWPFParagraph paragraph = row.getCell(2).addParagraph();
         XWPFRun run = paragraph.createRun();
-        // Variables d'import des images
         InputStream is;
         try {
             File imgLogo = new File("src/media/logofinal.jpg");
@@ -86,8 +82,11 @@ public class AttestationModel {
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
-
-        // Header droit
+        */
+        /*
+        Body
+         */
+        // Infos client (right)
         XWPFParagraph paragraph2 = document.createParagraph();
         XWPFRun run2 = paragraph2.createRun();
         run2.addBreak();
@@ -98,13 +97,13 @@ public class AttestationModel {
         run2.setText(attestationUI.getTxtCP() + " " + attestationUI.getTxtVille());
         run2.addBreak();
         run2.addBreak();
-        run2.setText("le " + attestationUI.getDateChooser() + ",");
+        run2.setText("le " + attestationUI.getDateAttestation() + ",");
         run2.addBreak();
         run2.addBreak();
         run2.setFontFamily("Calibri");
         paragraph2.setAlignment(ParagraphAlignment.RIGHT);
 
-        // Titre
+        // Titre (top center)
         XWPFParagraph paragraph3 = document.createParagraph();
         XWPFRun run3 = paragraph3.createRun();
         run3.setText("Attestation destinée au Centre des Impôts");
@@ -114,7 +113,7 @@ public class AttestationModel {
         run3.setUnderline(UnderlinePatterns.SINGLE);
         paragraph3.setAlignment(ParagraphAlignment.CENTER);
 
-        // Body
+        // Body (middle center)
         XWPFParagraph paragraph4 = document.createParagraph();
         XWPFRun run4 = paragraph4.createRun();
         run4.addBreak();
@@ -127,7 +126,7 @@ public class AttestationModel {
         run4.addBreak();
         run4.addTab();
         run4.addTab();
-        run4.setText("Montant total des factures de " + attestationUI.getYearChooser() + " : " + attestationUI.getTxtMontantAttest() + " euros");
+        run4.setText("Montant total des factures pour l'année fiscale " + attestationUI.getExerciceFiscal() + " : " + attestationUI.getTxtMontantAttest() + " euros");
         run4.addBreak();
         run4.addTab();
         run4.addTab();
@@ -158,7 +157,6 @@ public class AttestationModel {
         run04.setText("* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. "
                 + "Une attestation est délivrée par les établissements qui préfinancent le CESU.");
         run04.setFontSize(10);
-        // retour au font size 11
         XWPFParagraph paragraph004 = document.createParagraph();
         XWPFRun run004 = paragraph004.createRun();
         run004.addBreak();
@@ -180,7 +178,7 @@ public class AttestationModel {
         try {
             File imgSignature = new File("src/media/signature.jpg");
             String imgSignatureAbsolute = imgSignature.getAbsolutePath();
-            is = new FileInputStream(imgSignatureAbsolute);
+            InputStream is = new FileInputStream(imgSignatureAbsolute);
             run5.addBreak();
             run5.addPicture(is, XWPFDocument.PICTURE_TYPE_JPEG, imgSignatureAbsolute, Units.toEMU(200), Units.toEMU(70));
         } catch (InvalidFormatException | IOException e) {
@@ -201,13 +199,11 @@ public class AttestationModel {
 
     // Méthode de sauvegarde du Document
     public void saveDoc() throws IOException {
-
         // Constructeurs
         JFrame parentFrame = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
-
-        // Méthodes création de fichier
         fileChooser.setDialogTitle("Enregistrer sous");
+        // création du fichier
         fileChooser.setSelectedFile(new File("Attestation-Fiscale" + attestationUI.getYearChooser() + "-" +
                 attestationUI.getTxtPrenom() + "-" + attestationUI.getTxtNom() + ".doc"));
         int userSelection = fileChooser.showSaveDialog(parentFrame);
@@ -224,8 +220,6 @@ public class AttestationModel {
             }
         }
     }
-
-
 }
 
 

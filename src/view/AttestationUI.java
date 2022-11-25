@@ -1,5 +1,7 @@
 package view;
 
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JYearChooser;
 import model.AttestationModel;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -29,6 +31,8 @@ public class AttestationUI extends JFrame {
     private final JTextField txtCP;
     private final JTextField txtMontantAttest;
     private final JComboBox<String> cmbTitre;
+    private final Calendar calendar = Calendar.getInstance();
+
 
     /**
      * Getters
@@ -64,19 +68,14 @@ public class AttestationUI extends JFrame {
         return (String) cmbTitre.getSelectedItem();
     }
 
-    /**
-     * Méthode getDateChooser() implémentée de la méthode getMontForInt()
-     *
-     * @return la date jour int, mois letters, année int
-     */
-    public String getDateChooser() {
-        Calendar calendar = Calendar.getInstance();
+    public String getDateAttestation() {
         return calendar.get(Calendar.DAY_OF_MONTH) + " " + getMonthForInt(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
     }
 
-    /**
-     * Méthode changement des mois number en mois letters
-     */
+    public String getExerciceFiscal() {
+        return String.valueOf(calendar.get(Calendar.YEAR));
+    }
+
     String getMonthForInt(int m) {
         String month = "invalid";
         DateFormatSymbols dfs = new DateFormatSymbols();
@@ -87,50 +86,11 @@ public class AttestationUI extends JFrame {
         return month;
     }
 
-    /**
-     * Méthode sélection de l'année uniquement
-     *
-     * @return l'année indiquée dans le calendrier
-     */
     public int getYearChooser() {
-        Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.YEAR);
     }
 
-    /**
-     * Vérification champs remplis
-     * Appel de la méthode save s'ils sont remplis
-     */
-    public void isInputValid() throws InvalidFormatException, IOException {
-        if (("".equals(getTxtNom())) || "".equals(getTxtPrenom()) || "".equals(getTxtVille()) || "".equals(getTxtAdresse()) || "".equals(getTxtMontantAttest())) {
-            JOptionPane.showMessageDialog(contentPane, "Merci de remplir tous les champs");
-        } else {
-            save();
-        }
-    }
 
-    /**
-     * Méthode fermeture de l'application
-     */
-    public void close() {
-        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            dispose();
-        }
-    }
-
-    /**
-     * Méthode bouton enregistrer
-     * Appel de saveDoc();
-     */
-    public void save() throws IOException, InvalidFormatException {
-        AttestationModel attestationModel = new AttestationModel(this);
-        int n = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            attestationModel.saveDoc();
-        }
-    }
 
     /**
      * Création du Frame
@@ -142,7 +102,7 @@ public class AttestationUI extends JFrame {
          */
         setTitle("Attestation Fiscale");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 457, 501);
+        setBounds(100, 100, 600, 600);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -226,32 +186,43 @@ public class AttestationUI extends JFrame {
         JLabel lblMontantAttest = new JLabel("Montant attestation");
         lblMontantAttest.setBounds(34, 285, 115, 14);
         contentPane.add(lblMontantAttest);
-
         txtMontantAttest = new JTextField();
         txtMontantAttest.setColumns(10);
         txtMontantAttest.setBounds(34, 310, 153, 20);
         contentPane.add(txtMontantAttest);
 
-
         /*
           Date attestation
-         */
+        */
         JLabel lblDate = new JLabel("Date attestation");
         lblDate.setBounds(298, 285, 95, 14);
         contentPane.add(lblDate);
+        JDateChooser dateAttestation = new JDateChooser();
+        dateAttestation.setDateFormatString("dd MMMM yyyy");
+        dateAttestation.setCalendar(Calendar.getInstance()); // set la date du jour dans le frame
+        dateAttestation.setBounds(240, 310, 153, 20);
+        contentPane.add(dateAttestation);
+        dateAttestation.setEnabled(false);
 
-        /*JDateChooser dateChooser = new JDateChooser();
-        dateChooser.setDateFormatString("dd MMMM yyyy");
-        dateChooser.setCalendar(Calendar.getInstance()); // set la date du jour dans le frame
-        dateChooser.setBounds(240, 310, 153, 20);
-        contentPane.add(dateChooser);
-        dateChooser.setEnabled(false);
-*/
+        /*
+          Choix exercice fiscal
+         */
+        JLabel lblExerciceFinancier = new JLabel("Date attestation");
+        lblDate.setBounds(298, 365, 95, 14);
+        contentPane.add(lblExerciceFinancier);
+        JYearChooser exerciceFiscal = new JYearChooser();
+        exerciceFiscal.setBounds(240, 380, 153, 20);
+        contentPane.add(exerciceFiscal);
+        exerciceFiscal.setEnabled(true);
+
+
         /*
           Bouton enregistrer
-          Event sur le clic et key entrer
          */
         JButton btnEnregistrer = new JButton("Enregistrer");
+        btnEnregistrer.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnEnregistrer.setBounds(34, 500, 153, 48);
+        contentPane.add(btnEnregistrer);
         // Méthode isInputValid() lors de l'event key enter
         btnEnregistrer.addKeyListener(new KeyAdapter() {
             @Override
@@ -273,15 +244,14 @@ public class AttestationUI extends JFrame {
                 e1.printStackTrace();
             }
         });
-        btnEnregistrer.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnEnregistrer.setBounds(34, 370, 153, 48);
-        contentPane.add(btnEnregistrer);
 
         /*
           Bouton quitter
-          Event sur le clic bouton et escape key
          */
         JButton btnQuitter = new JButton("Quitter");
+        btnQuitter.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnQuitter.setBounds(240, 500, 153, 48);
+        contentPane.add(btnQuitter);
         // Méthode close() lors de l'event key escape
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getRootPane().getActionMap();
@@ -297,9 +267,31 @@ public class AttestationUI extends JFrame {
         });
         // Méthode close() lors de l'event clic button quitter
         btnQuitter.addActionListener(e -> close());
-        btnQuitter.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnQuitter.setBounds(240, 370, 153, 48);
-        contentPane.add(btnQuitter);
+
+    }
+
+    public void isInputValid() throws InvalidFormatException, IOException {
+        if (("".equals(getTxtNom())) || "".equals(getTxtPrenom()) || "".equals(getTxtVille()) || "".equals(getTxtAdresse()) || "".equals(getTxtMontantAttest())) {
+            JOptionPane.showMessageDialog(contentPane, "Merci de remplir tous les champs");
+        } else {
+            save();
+        }
+    }
+
+    public void close() {
+        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+    }
+
+    public void save() throws IOException, InvalidFormatException {
+        AttestationModel attestationModel = new AttestationModel(this);
+        int n = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+            attestationModel.saveDoc();
+        }
     }
 
 }
