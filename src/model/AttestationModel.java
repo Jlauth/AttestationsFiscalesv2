@@ -1,5 +1,6 @@
 package model;
 
+import org.apache.poi.hslf.blip.Metafile;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.wp.usermodel.HeaderFooterType;
@@ -36,9 +37,9 @@ public class AttestationModel {
     public AttestationModel(AttestationUI attestationUI) {
         this.attestationUI = attestationUI;
         // Création de la table
-        XWPFTable table = document.createTable();
+        XWPFTable tableGlobal = document.createTable();
         // Enlever les bordures de la table
-        table.removeBorders();
+        tableGlobal.removeBorders();
         // Custom des marges du document
         CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
         CTPageMar pageMar = sectPr.addNewPgMar();
@@ -47,17 +48,47 @@ public class AttestationModel {
         pageMar.setLeft(BigInteger.valueOf(1000L));
         pageMar.setRight(BigInteger.valueOf(1000L));
 
-        // Espacement entre les lignes
-        //documentTitle.setSpacingBefore(100);
-
         /*
           Header
          */
-        XWPFHeader header = document.createHeader(HeaderFooterType.DEFAULT);
-        // TODO trouver une méthode pour aller à la ligne sans utiliser le "cheat"
         // Header gauche (table pos0)
         // infos entreprise
-        /*XWPFTableRow row = table.getRow(0);
+        XWPFHeader header = document.createHeader(HeaderFooterType.DEFAULT);
+        XWPFTable headerTable = header.createTable(1, 3);
+        headerTable.removeBorders();
+        XWPFTableRow rowHeader = headerTable.getRow(0);
+        XWPFTableCell cellHeader = rowHeader.getCell(0);
+        XWPFParagraph paragraphHeader = cellHeader.getParagraphArray(0);
+        XWPFRun runHeader = paragraphHeader.createRun();
+        runHeader.setText(ENTREPRISE_HOLDER);
+        runHeader.addBreak();
+        runHeader.setText(ENTREPRISE_NAME);
+        runHeader.addBreak();
+        runHeader.setText(ENTREPRISE_CITY);
+        runHeader.addBreak();
+        runHeader.setText(ENTREPRISE_MAIL);
+        runHeader.addBreak();
+        runHeader.setText(ENTREPRISE_ID);
+        paragraphHeader.setAlignment(ParagraphAlignment.LEFT);
+
+        cellHeader = rowHeader.getCell(2);
+        paragraphHeader = cellHeader.getParagraphArray(0);
+        runHeader = paragraphHeader.createRun();
+        InputStream is;
+        try {
+            File imgLogo = new File("src/media/logofinal.jpg");
+            String imgLogoAbsolute = imgLogo.getAbsolutePath();
+            is = new FileInputStream(imgLogoAbsolute);
+            runHeader.addPicture(is, XWPFDocument.PICTURE_TYPE_JPEG, imgLogoAbsolute, Units.toEMU(110), Units.toEMU(80));
+            paragraphHeader.setAlignment(ParagraphAlignment.RIGHT);
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException | InvalidFormatException e) {
+            throw new RuntimeException(e);
+        }
+
+        // TODO trouver une méthode pour aller à la ligne sans utiliser le "cheat"
+       /*
         row.getCell(0).setText(ENTREPRISE_NAME + CHEAT + CHEAT + CHEAT);
         row.getCell(0).setText(ENTREPRISE_STREET + CHEAT + CHEAT);
         row.getCell(0).setText(ENTREPRISE_CITY + CHEAT);
@@ -66,23 +97,12 @@ public class AttestationModel {
         row.getCell(0).setText(ENTREPRISE_ID);
         row.addNewTableCell();
         row.addNewTableCell();
-
+*/
         // TODO mieux aligner le logo
         // Header droit (table pos2)
         // logo
-        XWPFParagraph paragraph = row.getCell(2).addParagraph();
-        XWPFRun run = paragraph.createRun();
-        InputStream is;
-        try {
-            File imgLogo = new File("src/media/logofinal.jpg");
-            String imgLogoAbsolute = imgLogo.getAbsolutePath();
-            is = new FileInputStream(imgLogoAbsolute);
-            run.addPicture(is, XWPFDocument.PICTURE_TYPE_JPEG, imgLogoAbsolute, Units.toEMU(110), Units.toEMU(80));
-            paragraph.setAlignment(ParagraphAlignment.RIGHT);
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }
-        */
+
+
         /*
         Body
          */
@@ -119,9 +139,7 @@ public class AttestationModel {
         run4.addBreak();
         run4.addBreak();
         run4.addTab();
-        run4.setText("Je soussigné Monsieur " + ENTREPRISE_HOLDER + " gérant de l'organisme agréé " + ENTREPRISE_NAME +
-                " certifie que " + attestationUI.getCmbTitre() + " " + attestationUI.getTxtPrenom() + " " + attestationUI.getTxtNom() +
-                " a bénéficié d'assistance informatique à domicile, service à la personne :");
+        run4.setText("Je soussigné Monsieur " + ENTREPRISE_HOLDER + " gérant de l'organisme agréé " + ENTREPRISE_NAME + " certifie que " + attestationUI.getCmbTitre() + " " + attestationUI.getTxtPrenom() + " " + attestationUI.getTxtNom() + " a bénéficié d'assistance informatique à domicile, service à la personne :");
         run4.addBreak();
         run4.addBreak();
         run4.addTab();
@@ -154,8 +172,7 @@ public class AttestationModel {
         // écriture font size différent : 10
         XWPFParagraph paragraph04 = document.createParagraph();
         XWPFRun run04 = paragraph04.createRun();
-        run04.setText("* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. "
-                + "Une attestation est délivrée par les établissements qui préfinancent le CESU.");
+        run04.setText("* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " + "Une attestation est délivrée par les établissements qui préfinancent le CESU.");
         run04.setFontSize(10);
         XWPFParagraph paragraph004 = document.createParagraph();
         XWPFRun run004 = paragraph004.createRun();
@@ -178,7 +195,7 @@ public class AttestationModel {
         try {
             File imgSignature = new File("src/media/signature.jpg");
             String imgSignatureAbsolute = imgSignature.getAbsolutePath();
-            InputStream is = new FileInputStream(imgSignatureAbsolute);
+            is = new FileInputStream(imgSignatureAbsolute);
             run5.addBreak();
             run5.addPicture(is, XWPFDocument.PICTURE_TYPE_JPEG, imgSignatureAbsolute, Units.toEMU(200), Units.toEMU(70));
         } catch (InvalidFormatException | IOException e) {
@@ -204,8 +221,7 @@ public class AttestationModel {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Enregistrer sous");
         // création du fichier
-        fileChooser.setSelectedFile(new File("Attestation-Fiscale" + attestationUI.getYearChooser() + "-" +
-                attestationUI.getTxtPrenom() + "-" + attestationUI.getTxtNom() + ".doc"));
+        fileChooser.setSelectedFile(new File("Attestation-Fiscale" + attestationUI.getYearChooser() + "-" + attestationUI.getTxtPrenom() + "-" + attestationUI.getTxtNom() + ".doc"));
         int userSelection = fileChooser.showSaveDialog(parentFrame);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
