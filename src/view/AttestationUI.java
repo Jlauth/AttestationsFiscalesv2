@@ -23,7 +23,6 @@ public class AttestationUI extends JFrame {
      */
     @Serial
     private static final long serialVersionUID = 1L;
-    private final JPanel contentPane;
     private final JTextField txtNom;
     private final JTextField txtPrenom;
     private final JTextField txtAdresse;
@@ -91,21 +90,21 @@ public class AttestationUI extends JFrame {
     }
 
 
-
     /**
      * Création du Frame
      */
     public AttestationUI() {
 
         /*
-          Information de création du JFrame
+          Création Attestation
          */
+        JPanel contentPane = new JPanel();
         setTitle("Attestation Fiscale");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 600);
-        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+        setLocationRelativeTo(null);
         contentPane.setLayout(null);
 
         /*
@@ -271,12 +270,12 @@ public class AttestationUI extends JFrame {
     }
 
     public void isInputValid() throws InvalidFormatException, IOException {
-        if (("".equals(getTxtNom())) || "".equals(getTxtPrenom()) || "".equals(getTxtVille()) || "".equals(getTxtAdresse()) || "".equals(getTxtMontantAttest())) {
+       /* if (("".equals(getTxtNom())) || "".equals(getTxtPrenom()) || "".equals(getTxtVille()) || "".equals(getTxtAdresse()) || "".equals(getTxtMontantAttest())) {
             JOptionPane.showMessageDialog(contentPane, "Merci de remplir tous les champs");
-        } else {
-            save();
-        }
+        } else {*/
+        save();
     }
+
 
     public void close() {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
@@ -296,7 +295,6 @@ public class AttestationUI extends JFrame {
 
 }
 
-// TODO choix du dossier lors de l'enregistrement
 // TODO essayer de configurer également les keys messagebox
 // TODO event escape + enter sur quitter et enregistrer respectivement -> enlever l'utilisation de la touche espace dans les deux cas
 // TODO customiser les boutons
