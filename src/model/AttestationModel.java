@@ -33,7 +33,7 @@ public class AttestationModel {
     /**
      * Constructeur de la classe Attestation
      */
-    public AttestationModel(AttestationUI attestationUI) throws InvalidFormatException, IOException {
+    public AttestationModel(AttestationUI attestationUI) {
         this.attestationUI = attestationUI;
         // Création de la table
         XWPFTable table = document.createTable();
