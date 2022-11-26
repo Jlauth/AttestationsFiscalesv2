@@ -1,0 +1,25 @@
+
+`	java:S112W"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+c
+java:S1192{"HDefine a constant instead of duplicating this literal "Calibri" 3 times.(åŒìÈşÿÿÿÿ
+d
+java:S2095Æ"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(§ı¨
+n
+java:S3252R"XUse static access with "org.apache.poi.xwpf.usermodel.Document" for "PICTURE_TYPE_JPEG".(éÚö”
+V	java:S125\"<This block of commented-out lines of code should be removed.(ì¤Ôªúÿÿÿÿ
+M
+java:S1135Z"2Complete the task associated to this TODO comment.(ÏÇ²Ôüÿÿÿÿ
+G
+java:S1135e"2Complete the task associated to this TODO comment.(ı´Ò
+n
+java:S3252È"XUse static access with "org.apache.poi.xwpf.usermodel.Document" for "PICTURE_TYPE_JPEG".(—Øº`
+O	java:S106Ó"9Replace this use of System.out or System.err by a logger.(œš¯
+T	java:S106é"9Replace this use of System.out or System.err by a logger.(‡ÉÈãÿÿÿÿÿ
+Y
+java:S1128">Remove this unused import 'org.apache.poi.hslf.blip.Metafile'.(ø˜èıøÿÿÿÿ
+?
+java:S1068")Remove this unused "CHEAT" private field.(¦¶†Û
+P
+java:S1068"5Remove this unused "ENTREPRISE_STREET" private field.(ç¥“øÿÿÿÿÿ
+J
+java:S1068"4Remove this unused "ENTREPRISE_PHONE" private field.(Ùõ³°
