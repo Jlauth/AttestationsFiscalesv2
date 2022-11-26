@@ -6,35 +6,28 @@ import java.awt.*;
 
 public class AccueilUI extends JFrame {
 
-    private JPanel panel1;
-    private JButton btnAttestation;
-    private JButton btnEditerClient;
-
     public AccueilUI() {
-        createUIComponents();
-    }
 
-    public void createUIComponents() {
          /*
           Création Accueil
          */
-        setPanel1(new JPanel());
+        JPanel accueilPane = new JPanel();
         setTitle("Attestation Fiscale");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 600);
-        getPanel1().setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(getPanel1());
+        accueilPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(accueilPane);
         setLocationRelativeTo(null);
-        getPanel1().setLayout(null);
+        accueilPane.setLayout(null);
 
         /*
           Bouton nouvelle attestation
          */
-        setBtnAttestation(new JButton("Nouvelle attestation"));
-        getBtnAttestation().setFont(new Font("Tahoma", Font.BOLD, 14));
-        getBtnAttestation().setBounds(30, 50, 200, 50);
-        getPanel1().add(getBtnAttestation());
-        getBtnAttestation().addActionListener(e -> {
+        JButton btnAttestation = new JButton("Nouvelle attestation");
+        btnAttestation.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnAttestation.setBounds(30, 50, 200, 50);
+        accueilPane.add(btnAttestation);
+        btnAttestation.addActionListener(e -> {
             AttestationUI attestationUI = new AttestationUI();
             attestationUI.setVisible(true);
             dispose();
@@ -43,39 +36,28 @@ public class AccueilUI extends JFrame {
         /*
           Bouton éditer client
          */
-        setBtnEditerClient(new JButton("Editer client"));
-        getBtnEditerClient().setFont(new Font("Tahoma", Font.BOLD, 14));
-        getBtnEditerClient().setBounds(30, 150, 200, 50);
-        getPanel1().add(getBtnEditerClient());
-        getBtnEditerClient().addActionListener(e -> {
+        JButton btnEditerClient = new JButton("Editer client");
+        btnEditerClient.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnEditerClient.setBounds(30, 150, 200, 50);
+        accueilPane.add(btnEditerClient);
+        btnEditerClient.addActionListener(e -> {
             EditerClientUI editerClientUI = new EditerClientUI();
             editerClientUI.setVisible(true);
             dispose();
         });
-    }
 
-    public JPanel getPanel1() {
-        return panel1;
-    }
-
-    public void setPanel1(JPanel panel1) {
-        this.panel1 = panel1;
-    }
-
-    public JButton getBtnAttestation() {
-        return btnAttestation;
-    }
-
-    public void setBtnAttestation(JButton btnAttestation) {
-        this.btnAttestation = btnAttestation;
-    }
-
-    public JButton getBtnEditerClient() {
-        return btnEditerClient;
-    }
-
-    public void setBtnEditerClient(JButton btnEditerClient) {
-        this.btnEditerClient = btnEditerClient;
+         /*
+          Bouton éditer entreprise
+         */
+        JButton btnEditerEntreprise = new JButton("Editer entreprise");
+        btnEditerEntreprise.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnEditerEntreprise.setBounds(30,350,200, 50);
+        accueilPane.add(btnEditerEntreprise);
+        btnEditerEntreprise.addActionListener(e -> {
+            EditerEntrepriseUI editerEntrepriseUI = new EditerEntrepriseUI();
+            editerEntrepriseUI.setVisible(true);
+            dispose();
+        });
     }
 }
 

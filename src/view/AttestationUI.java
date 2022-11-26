@@ -220,7 +220,7 @@ public class AttestationUI extends JFrame {
          */
         JButton btnEnregistrer = new JButton("Enregistrer");
         btnEnregistrer.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnEnregistrer.setBounds(34, 500, 153, 48);
+        btnEnregistrer.setBounds(50, 500, 120, 50);
         contentPane.add(btnEnregistrer);
         // Méthode isInputValid() lors de l'event key enter
         btnEnregistrer.addKeyListener(new KeyAdapter() {
@@ -244,12 +244,25 @@ public class AttestationUI extends JFrame {
             }
         });
 
+          /*
+          Btn Accueil
+         */
+        JButton btnAccueil = new JButton("Accueil");
+        btnAccueil.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnAccueil.setBounds(210, 500, 120, 50);
+        contentPane.add(btnAccueil);
+        btnAccueil.addActionListener(e -> {
+            AccueilUI accueilUI = new AccueilUI();
+            accueilUI.setVisible(true);
+            dispose();
+        });
+        
         /*
           Bouton quitter
          */
         JButton btnQuitter = new JButton("Quitter");
         btnQuitter.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnQuitter.setBounds(240, 500, 153, 48);
+        btnQuitter.setBounds(360, 500, 120, 50);
         contentPane.add(btnQuitter);
         // Méthode close() lors de l'event key escape
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -284,7 +297,7 @@ public class AttestationUI extends JFrame {
         }
     }
 
-    public void save() throws IOException, InvalidFormatException {
+    public void save() throws IOException {
         AttestationModel attestationModel = new AttestationModel(this);
         int n = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
